@@ -1,3 +1,5 @@
+metadata:
+  name: codeready
 schemaVersion: 2.1.0
 components:
   - name: python

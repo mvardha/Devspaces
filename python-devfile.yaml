@@ -1,0 +1,31 @@
+metadata:
+  name: codeready
+schemaVersion: 2.1.0
+components:
+  - name: python
+    container:
+      image: registry.redhat.io/devspaces/udi-rhel8@sha256:bb951a5040851e9f17ca0d21771b428296326753363fd4d2b87ab1f7d35e72b3
+      volumeMounts:
+        - name: venv
+          path: /home/user/.venv
+      memoryLimit: 2Gi
+      memoryRequest: 1Gi
+      cpuLimit: '2'
+      cpuRequest: '1'
+      mountSources: true
+  - name: venv
+    volume:
+      size: 1G
+commands:
+  - id: run
+    exec:
+      label: Run the application
+      component: python
+      workingDir: ${PROJECTS_ROOT}/python-hello-world
+      commandLine: python -m venv .venv && . .venv/bin/activate && python hello-world.py
+      group:
+        kind: run
+projects:
+  - name: python-hello-world
+    zip:
+      location: 'http://devfile-registry.openshift-operators.svc:8080/resources/v2/python-hello-world.zip'
